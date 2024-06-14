@@ -138,6 +138,34 @@ if (isset($_GET['ajax']) && $_GET['ajax'] == 'getMatchs') {
         </form>
     </div>
     <br>
-    <div id="liste-matchs"></div>   
+    <div id="liste-matchs"></div> 
+
+    <div>
+        <?php
+    try {
+        // Connexion à la base de données
+        $db = new PDO('mysql:host=localhost;dbname=db_score', 'root', '');
+        //echo 'Connexion réussie ';
+    } catch (PDOException $e) {
+        die('Erreur de connexion à la base de données: ' . $e->getMessage());    
+    }
+    // Récupérer la liste des matchs
+    $sql = "SELECT * FROM matchs";
+    $result = $db->query($sql);
+
+    // Générer le tableau HTML
+    $html = '<table border="1" class="table">';
+    $html .= '<tr class="thead-dark"><th>Date</th><th>Score</th><th>Stade</th></tr>';
+    while ($row = $result->fetch()) {
+        $html .= '<tr>';
+        $html .= '<td>' . $row['date_match'] . '</td>';
+        $html .= '<td>' . $row['score_dom'] . ' - ' . $row['score_visit'] . '</td>';
+        $html .= '<td>' . $row['stade'] . '</td>';
+        $html .= '</tr>';
+    }
+    $html .= '</table>';
+    echo $html;
+    ?>
+    </div>  
 </body>
 </html>
