@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 14 juin 2024 à 21:14
+-- Généré le : ven. 14 juin 2024 à 22:33
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.2
 
@@ -102,22 +102,21 @@ INSERT INTO `joueurs` (`id`, `nom_joueur`, `prenom_joueur`, `date_naissance`, `p
 CREATE TABLE `matchs` (
   `id` int(11) NOT NULL,
   `date_match` date NOT NULL,
-  `heure_match` time NOT NULL,
-  `journee_match` varchar(255) NOT NULL,
-  `equipe_dom_id` int(11) NOT NULL,
-  `equipe_visit_id` int(11) NOT NULL,
-  `score_dom` int(11) NOT NULL,
-  `score_visit` int(11) NOT NULL,
-  `stade` varchar(255) NOT NULL
+  `equipe_dom_id` int(11) DEFAULT NULL,
+  `equipe_visit_id` int(11) DEFAULT NULL,
+  `score_dom` int(11) DEFAULT NULL,
+  `score_visit` int(11) DEFAULT NULL,
+  `stade` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `matchs`
 --
 
-INSERT INTO `matchs` (`id`, `date_match`, `heure_match`, `journee_match`, `equipe_dom_id`, `equipe_visit_id`, `score_dom`, `score_visit`, `stade`) VALUES
-(1, '2024-01-13', '16:00:00', '9', 1, 2, 3, 2, 'SO Abomey'),
-(2, '2024-01-14', '20:00:00', '10', 2, 1, 2, 1, 'SO Parakou');
+INSERT INTO `matchs` (`id`, `date_match`, `equipe_dom_id`, `equipe_visit_id`, `score_dom`, `score_visit`, `stade`) VALUES
+(1, '2024-01-13', 1, 2, 3, 2, 'SO Abomey'),
+(2, '2024-01-14', 2, 1, 2, 1, 'SO Parakou'),
+(5, '2024-06-03', NULL, NULL, 2, 1, 'Stade Charles de Gaulle Porto-Novo');
 
 --
 -- Index pour les tables déchargées
@@ -173,7 +172,7 @@ ALTER TABLE `joueurs`
 -- AUTO_INCREMENT pour la table `matchs`
 --
 ALTER TABLE `matchs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

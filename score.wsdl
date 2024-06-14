@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:Definition xmlns:wsdl="http://www.w3.org/2007/wsdl"
+                xmlns:soap="http://schemas.xmlsoap.org/wsdl/"
+                xmlns:tm="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="http://localhost/enregistrement_score">
+
+    <wsdl:types>
+        <tm:schema elementFormDefault="unqualified">
+            <tm:complexType name="Match">
+                <tm:sequence>
+                    <tm:element name="id" type="tm:int"/>
+                    <tm:element name="date_match" type="tm:date"/>
+                    <tm:element name="score_dom" type="tm:int"/>
+                    <tm:element name="score_visit" type="tm:int"/>
+                    <tm:element name="stade" type="tm:string"/>
+                </tm:sequence>
+            </tm:complexType>
+
+            <tm:complexType name="MatchRequest">
+                <tm:sequence>
+                    <tm:element name="date_match" type="tm:date"/>
+                    <tm:element name="score_dom" type="tm:int"/>
+                    <tm:element name="score_visit" type="tm:int"/>
+                    <tm:element name="stade" type="tm:string"/>
+                </tm:sequence>
+            </tm:complexType>
+
+            <tm:complexType name="MatchResponse">
+                <tm:sequence>
+                    <tm:element name="message" type="tm:string"/>
+                    <tm:element name="match" type="tns:Match" minOccurs="0"/>
+                </tm:sequence>
+            </tm:complexType>
+        </tm:schema>
+    </wsdl:types>
+
+    <wsdl:message name="EnregistrementMatchRequest">
+        <wsdl:part name="match" element="tns:MatchRequest"/>
+    </wsdl:message>
+
+    <wsdl:message name="EnregistrementMatchResponse">
+        <wsdl:part name="resultat" element="tns:MatchResponse"/>
+    </wsdl:message>
+
+    <wsdl:portType name="EnregistrementScorePortType">
+        <wsdl:operation name="EnregistrerMatch">
+            <wsdl:input message="tns:EnregistrementMatchRequest"/>
+            <wsdl:output message="tns:EnregistrementMatchResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:service name="EnregistrementScoreService">
+        <wsdl:port binding="tns:EnregistrementScoreBinding">
+            <wsdl:soapAddress location="http://localhost/enregistrement_score/enregistrement_score.php"/>
+        </wsdl:port>
+    </wsdl:service>
+
+    <wsdl:binding name="EnregistrementScoreBinding" type="tns:EnregistrementScorePortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="EnregistrerMatch">
+            <soap:operation soapAction="http://localhost/enregistrement_score/EnregistrerMatch"/>
+            <soap:input>
+                <soap:body use="encoded" style="document"
+                           namespacePrefix="ns1"
+                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </soap:input>
+            <soap:output>
+                <soap:body use="encoded" style="document"
+                           namespacePrefix="ns1"
+                           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </soap:output>
+        </soap:operation>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:Definition>
